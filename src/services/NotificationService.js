@@ -24,9 +24,9 @@ export default class NotificationService {
     schedule() {
         PushNotification.localNotificationSchedule({
             message: "Wypij szklankę wody",
-            date: new Date(Date.now() + 10 * 1000), // in 10 secs
+            date: new Date(Date.now() + 10 * 1000), //10 sekund
             number: '2',
-            repeatType: 'minute'
+            repeatType: 'hour'
         });
     }
 

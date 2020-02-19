@@ -28,7 +28,7 @@ const LoginScreen = (props) => {
             <View style={styles.loginFormContainer}>
                 <View style={styles.textInputView}>
                     <Text>Login</Text>
-                    <TextInput value={login} onChangeText={text => setLogin(text)} style={styles.textInput}/>
+                    <TextInput value={login} onChangeText={text => setLogin(text)} style={styles.textInput} keyboardType='email-address' autoCapitalize = 'none'/>
                 </View>
 
                 <View style={styles.textInputView}>
