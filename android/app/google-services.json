@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "389773699338",
+    "firebase_url": "https://hydrant-9f6c1.firebaseio.com",
+    "project_id": "hydrant-9f6c1",
+    "storage_bucket": "hydrant-9f6c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389773699338:android:cbccd283dc8eb9ed38b2f3",
+        "android_client_info": {
+          "package_name": "com.tuneit.hydrant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389773699338-j13q8bpln938krfk5q5jq6q53epmb0v5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeXMb8KiP69_HCIGm1UQKMjVBDKAs8ek8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389773699338-j13q8bpln938krfk5q5jq6q53epmb0v5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
