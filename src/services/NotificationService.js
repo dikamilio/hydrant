@@ -1,4 +1,6 @@
 import PushNotification from 'react-native-push-notification';
+import {AsyncStorage} from 'react-native';
+
 
 export default class NotificationService {
 
@@ -21,17 +23,22 @@ export default class NotificationService {
         });
     }
 
-    schedule() {
-        PushNotification.localNotificationSchedule({
-            message: "Wypij szklankę wody",
-            date: new Date(Date.now() + 10 * 1000), //10 sekund
-            number: '2',
-            repeatType: 'hour'
-        });
+    async schedule() {
+        let existingNotification = await AsyncStorage.getItem('existingNotification');
+        if (existingNotification === 'false' || existingNotification === null) {
+            PushNotification.localNotificationSchedule({
+                message: "Wypij szklankę wody",
+                date: new Date(Date.now() + 10 * 1000), //10 sekund
+                number: '2',
+                repeatType: 'hour'
+            });
+            AsyncStorage.setItem('existingNotification', JSON.stringify(true));
+        }
     }
 
     cancel() {
         PushNotification.cancelAllLocalNotifications();
+        AsyncStorage.setItem('existingNotification', JSON.stringify(false));
     }
 
 

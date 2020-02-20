@@ -1,4 +1,4 @@
-import {Button, Text, TextInput, View, Animated, StyleSheet, Alert, Switch} from 'react-native';
+import {Button, Text, TextInput, View, Animated, StyleSheet, Alert, Switch, AsyncStorage} from 'react-native';
 import React, {useRef, useState, useEffect} from 'react';
 import ProgressBar from './components/ProgressBar';
 import NotificationService from '../services/NotificationService';
@@ -10,24 +10,42 @@ const LoginScreen = (props) => {
     const [goalReached, setGoalReached] = useState(false);
 
     useEffect(() => {
+        AsyncStorage.getItem('progress').then(progress => {
+                if (progress != null) {
+                    setProgress(parseFloat(progress));
+                } else {
+                    setProgress(0);
+                }
+            }
+        );
+        AsyncStorage.getItem('notification').then(notification => {
+                if (notification != null)
+                    setNotificationsEnabled(JSON.parse(notification));
+                else
+                    setNotificationsEnabled(true);
+            }
+        );
+    }, [props.route.key]);
+
+    useEffect(() => {
         if (notificationsEnabled)
             notif.schedule();
         else
-            notif.cancel()
+            notif.cancel();
+        AsyncStorage.setItem('notification', JSON.stringify(notificationsEnabled));
     }, [notificationsEnabled]);
 
-    useEffect( () => {
+    useEffect(() => {
         if (progress > 99)
             setGoalReached(true);
         if (progress === 0) {
             setGoalReached(false);
         }
-    },[progress]);
-
+        AsyncStorage.setItem('progress', JSON.stringify(progress));
+    }, [progress]);
 
     const onRegister = (token) => {
-        Alert.alert("Registered !", JSON.stringify(token));
-        this.setState({ registerToken: token.token, gcmRegistered: true });
+        console.log('Registered')
     }
 
     const onNotif = (notif) => {
@@ -49,11 +67,12 @@ const LoginScreen = (props) => {
         <View style={styles.container}>
             <Text>Pamiętaj o nawodnieniu!</Text>
             <ProgressBar progress={progress}/>
-            <Button title="Wypij szklankę wody" onPress={() => setProgress(progress + 100/12)} disabled={goalReached}></Button>
+            <Button title="Wypij szklankę wody" onPress={() => setProgress(progress + 100 / 12)}
+                    disabled={goalReached}></Button>
             <Button title="Wyzeruj licznik" onPress={() => setProgress(0)}></Button>
             <View style={styles.switchView}>
                 <Text>Czy włączyć powiadomienia?</Text>
-                <Switch value={notificationsEnabled} onValueChange={(value) => switchNotifications(value)} />
+                <Switch value={notificationsEnabled} onValueChange={(value) => switchNotifications(value)}/>
             </View>
 
         </View>
